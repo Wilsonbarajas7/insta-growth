@@ -1,0 +1,25 @@
+{
+  "name": "insta-growth",
+  "version": "0.0.1",
+  "description": "tool for instagram that helps you to growth",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EsteveSegura/insta-growth.git"
+  },
+  "keywords": [
+    "instagram"
+  ],
+  "author": "GiR",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EsteveSegura/insta-growth/issues"
+  },
+  "homepage": "https://github.com/EsteveSegura/insta-growth#readme",
+  "dependencies": {
+    "tools-for-instagram": "^1.8.3"
+  }
+}
