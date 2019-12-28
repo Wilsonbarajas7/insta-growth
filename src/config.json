@@ -1,3 +1,5 @@
 {
-    "hashtags" : ["recipe","foodies","cooking","food","foodporn","yumyum","foodphotography","foodpics","delicious"]
+    "hashtags" : ["foodies","cooking"],
+    "maxFollows" : 1000,
+    "maxMediaCount" : 450
 }
