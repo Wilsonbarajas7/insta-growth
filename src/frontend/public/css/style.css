@@ -1,0 +1,68 @@
+body{
+    
+}
+
+.font-white{
+    color: white !important;
+}
+
+.card-container{
+    background-color: #282a30;
+    margin-top: 2em;
+    padding: 1em 2em;
+    width: 100%;
+    box-shadow: 10px 10px 22px -1px rgba(0,0,0,0.30);
+}
+
+.profile-picture img{
+    width: 40px;
+    border-radius: 50%;
+}
+
+.user-caption{
+    line-height: 42px;
+    margin-left: 1em;
+}
+
+.user-caption span{
+    font-size: 19px;
+    font-weight: bolder;
+}
+
+.card-picture img{
+    margin:1em 0em;
+    width: 100%;
+}
+
+.post-comment img{
+    width: 30px;
+}
+
+
+
+::placeholder { 
+    color: #ddd;
+    padding: 3px;
+  }
+
+input[type="text"] {
+    text-indent: 5px;
+    width: 93%; 
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    background: transparent;
+    color: white;
+}
+
+
+
+input:focus { 
+    outline: none; 
+}
+
+
+
+.comment-user{
+    font-weight: bolder;
+}
+

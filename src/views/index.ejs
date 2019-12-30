@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <div class="container ">
+        <div class="row justify-content-center">
+            <div id="feed" class="col-7 text-center font-white ">
+
+
+
+                
+                <div class="card-container">
+                    <div class="name-holder d-flex flex-row">
+                        <div class="profile-picture ">
+                            <img src="https://i.pravatar.cc/300" alt="profile picture">
+                        </div>
+                        <div class="user-caption">
+                            <span>Chanquete</span>
+                        </div>
+                    </div>
+                    <div class="card-picture">
+                        <img src="https://via.placeholder.com/500" alt="instagram post">
+                    </div>
+                    <div class="icons-holder d-flex flex-row">
+                        <i id="" class="fi-xtluh2-thumb-wide"></i>
+                    </div>
+                    <div class="comments-holder mt-2">
+                        <div class="comment d-flex flex-row">
+                            <div class="comment-user">
+                                chanquete:
+                            </div>
+                            <div class="commment-content"> De este barco no me mueven</div>
+                        </div>
+                    </div>
+                    <div class="post-comment mt-3">
+                        <input type="text" name="comment-to-post" placeholder="Escribe tu comentario aquí">
+                        <img src="./img/send.svg" style='fill:red;'>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script defer src="https://friconix.com/cdn/friconix.js"> </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    
+    <script>
+        //"hashtags" : ["recipe","foodies","cooking","food","foodporn","yumyum","foodphotography","foodpics","delicious"],
+        let socket = io.connect('http://localhost:5000/')
+
+        function createCard(username, profilePicture, post) {
+            let cardTemplate = `<div class="card-container">
+                        <div class="name-holder d-flex flex-row">
+                            <div class="profile-picture ">
+                                <img src="${profilePicture}" alt="profile picture">
+                            </div>
+                            <div class="user-caption">
+                                <span>${username}</span>
+                            </div>
+                        </div>
+                        <div class="card-picture">
+                            <img src="${post}" alt="instagram post">
+                        </div>
+                        <div class="icons-holder d-flex flex-row">
+                            <span>LIKE</span>
+                        </div>
+                        <div class="comments-holder mt-2">
+                            <div class="comment d-flex flex-row">
+                                <div class="comment-user">
+                                    chanquete: 
+                                </div>
+                                <div class="commment-content"> De este barco no me mueven</div>
+                            </div>
+                        </div>
+                        <div class="post-comment mt-3">
+                            <input type="text" name="comment-to-post" placeholder="Escribe tu comentario aquí">
+                            <img src="./img/send.svg" >
+                            <!--<i  class="fi-xnsrxl-chevron-solid height-ok"></i>-->
+                        </div>
+                    </div>`
+
+                    return cardTemplate
+        }
+
+        socket.on('addNewPost', (data) => {
+            console.log(data)
+            let cardToRender = createCard(data.userInfo.username, data.userInfo.profile_pic_url, data.photoUrl)
+            $("#feed").append(cardToRender)
+        })
+
+    </script>
+</body>
+</html>
