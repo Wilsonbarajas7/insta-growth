@@ -30,9 +30,13 @@ io.on('connection' , (socket) => {
 
     socket.on('postComment', (body) => {
         console.log(body)
-        socket.emit('postComment', body);
+        socket.broadcast.emit('postComment', body);
     });
-    
+
+    socket.on('giveLike', (body) => {
+        console.log(body)
+        socket.broadcast.emit('giveLike', body);
+    });
 
     socket.on('disconnect', function(){
         console.log('user disconnected');

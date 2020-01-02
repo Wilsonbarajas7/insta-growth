@@ -3,20 +3,15 @@ require('tools-for-instagram');
 const _ = require('lodash');
 const utilSave = require('./saveToJson');
 let socket = require('socket.io-client')('http://localhost:5000/');
-let commentsToPerfom = []
 
-/*
-    WARN: Actual limit is 180 request x min
-    TODO: Avoid selfcomments of original poster, in sorting
-*/
+
+//"hashtags" : ["recipe","foodies","cooking","food","foodporn","yumyum","foodphotography","foodpics","delicious"],
 
 socket.on("connect", () => {
     console.log('Bot WORKING');
 });
 
-socket.on('addNewPost', function(data){
-    commentsToPerfom.push(data)
-});
+
 
 async function getCleanFeed(ig, hashtags) {
     return new Promise(async (resolve, reject) => {
@@ -70,9 +65,6 @@ function sortingByCountLikesAndPosts(maxCountComments, maxCountLikes, getVideos,
         }
     })
 
-    console.log(`La limpieza por el maximo de likes ha dejado un total de ${sortingByCountLikes.length} posts`)
-    console.log(`La limpieza por el maximo de comments ha dejado un total de ${sortingByCountComments.length} posts`)
-
     let bothSortedLists = [sortingByCountLikes, sortingByCountComments]
     bothSortedLists = _.flatten(bothSortedLists)
     bothSortedLists = _.uniq(bothSortedLists)
@@ -80,28 +72,20 @@ function sortingByCountLikesAndPosts(maxCountComments, maxCountLikes, getVideos,
     return bothSortedLists
 }
 
-
-function checkWaitingActions(){
-    if(commentsToPerfom.length != 0){
-
-    }
-}
-
-
 async function sortByUserInfo(ig, feed) {
     return new Promise(async (resolve, reject) => {
         let usersFiltered = []
 
-        console.log(`El numero de perfiles que se van a analizar es de : ${feed.length}`)
-        for (let i = 0; i < /*feed.length*/50; i++) {
-            checkWaitingActions()
-            //console.log(dataR.length)
-
+        for (let i = 0; i < feed.length; i++) {
             try {
                 let infoAboutUser = await getUserInfo(ig, feed[i].user.username)
+
+                //console.log(infoAboutUser)
                 if (infoAboutUser.follower_count <= config.maxFollows && infoAboutUser.media_count <= config.maxMediaCount && !infoAboutUser.is_verified) {
                     let urlPhoto = await getPhotoUrl(ig, feed[i].id)
                     
+                    console.log(infoAboutUser.username)
+
                     let objectInfo = {
                         "userInfo" : infoAboutUser,
                         "ownFeed" : feed[i],
@@ -111,61 +95,13 @@ async function sortByUserInfo(ig, feed) {
                     socket.emit('addNewPost', objectInfo);
                     usersFiltered.push(objectInfo)
                 }
-                await sleep(3)
-
-
+                await sleep(15)
             } catch (error) {
                 console.log(error)
             }
         }
-
-        /*
-        let sortingUsers = allUsers.filter((user) => {
-            if (user.follower_count <= config.maxFollows && user.media_count <= config.maxMediaCount && !user.is_verified) {
-                return user
-            }
-        })
-
-
-        
-        let usersWithTheirFeed = await Promise.all(sortingUsers.map(async (sortedUsers, index) => {
-            let ownFeed = feed.filter(async (feedExport) => {
-                if (feedExport.user.username == sortedUsers.username) {
-                    return feedExport;
-                }
-            });
-
-            console.log('-------------------')
-            console.log("username: " + sortedUsers.username)
-            console.log("isPrivate: " + sortedUsers.is_private)
-            console.log("isVerified: " + sortedUsers.is_verified)
-            console.log("followerCount: " + sortedUsers.follower_count)
-            console.log("followingCount: " + sortedUsers.following_count)
-            console.log("photoCode: " + ownFeed[index].code)
-            console.log('-------------------')
-    
-
-            let actualOwnFeed = _.find(ownFeed, function(o) {
-                if(sortedUsers.username == o.user.username){
-                    return true;
-                }
-            });
-            
-            
-            let urlPhoto = await getPhotoUrl(ig, actualOwnFeed.id)
-
-   
-            console.log('socket emitedd')
-
-            return {
-                "userInfo" : sortedUsers,
-                "ownFeed" : actualOwnFeed,
-                "photoUrl" : urlPhoto
-            }
-        }))
-        */
         resolve(usersFiltered)
-    })
+    });
 }
 
 function getRatioFollowingFollowedAccounts(following_count, follower_count) {
@@ -173,22 +109,29 @@ function getRatioFollowingFollowedAccounts(following_count, follower_count) {
 }
 
 (async () => {
-    //Loading our config && login
     const config = require('./config.json')
     let ig = await login();
 
-    //geting hashtags posts
+    socket.on('postComment', function(data){
+        console.log(data);
+        commentMediaId(ig, data.media_id, data.commentContent)
+    });
+
+    socket.on('giveLike', function(data){
+        console.log(data)
+        likeMediaId(ig, data.media_id)  
+    });
+
     let feed = await getCleanFeed(ig, config.hashtags);
-    console.log(`Feed OK. ${feed.length} posts found in ${config.hashtags.length} hastags`)
-    console.log(`Sorting feed.`)
+    console.log(`Feed Loaded!.\n${feed.length} posts found in ${config.hashtags.length} hastags`)
+    console.log(feed)
 
     let sortedByPopularity = sortingByCountLikesAndPosts(2, 20, false, feed) //Check varibale name
-    //console.log(`La criba basada en maxComments y MaxLikes es de ${sortedByPopularity.length}`)
+    console.log(`Sorted by maxLikes and maxComments: ${sortedByPopularity.length} profiles`);
 
-    //let DEVsortedByPopularity = _.take(sortedByPopularity, 5)
     let sortedByInfoUser = await sortByUserInfo(ig,sortedByPopularity)// sortByUserInfo(ig,sortedByPopularity)
+    console.log(`Sorted by uploaded maxFollows, maxMediaCount and verfiedProfile: ${sortedByInfoUser.length} profiles`)
     utilSave.saveVarToJson(sortedByInfoUser)
-    
 
     console.log("SESSION END")
 })();

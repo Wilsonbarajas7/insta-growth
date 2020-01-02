@@ -1,6 +1,6 @@
 {
-    "hashtags" : ["recipe","foodies","cooking","food","foodporn","yumyum","foodphotography","foodpics","delicious"],
+    "hashtags" : ["skier","snowboard","snowboarding","skiing","burtonsnowboards","skitracks","skislope","snow"],
+    "bannedHastags" : [],
     "maxFollows" : 1000,
     "maxMediaCount" : 450
-    
 }

@@ -38,7 +38,9 @@ body{
     width: 30px;
 }
 
-
+.icons-holder img{
+    width: 30px;
+}
 
 ::placeholder { 
     color: #ddd;

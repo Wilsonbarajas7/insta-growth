@@ -1,7 +1,8 @@
 const fs = require('fs');
 
 function saveVarToJson(content){
-    fs.writeFile(`./data.json`,JSON.stringify(content), (err) =>{
+    let actualDate = new Date.now()
+    fs.writeFile(`./log/data_${actualDate}.json`,JSON.stringify(content), (err) =>{
         if(err){
             console.log(err)
         }
