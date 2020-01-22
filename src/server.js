@@ -11,18 +11,13 @@ const io = socketIo(server);
 
 
 app.set('views', './views');
-app.set('view engine','ejs');
+app.set('view engine', 'ejs');
 app.use(express.static('./frontend/public'));
-app.use(bodyParser.urlencoded({ extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/',routes);
+app.use('/', routes);
 
-io.on('connection' , (socket) => {
-    console.log('a user connected');
-    setInterval(() => {
-        //socket.emit('addNewPost', "sad");
-        //console.log('emit')
-    }, 500);
+io.on('connection', (socket) => {
     socket.on('addNewPost', (body) => {
         console.log(body)
         socket.broadcast.emit('addNewPost', body);
@@ -38,13 +33,12 @@ io.on('connection' , (socket) => {
         socket.broadcast.emit('giveLike', body);
     });
 
-    socket.on('disconnect', function(){
+    socket.on('disconnect', function () {
         console.log('user disconnected');
-      });
-
+    });
 });
 
 
-server.listen(5000,() =>{
-    console.log('Server runing on port 5000.')
-})
+server.listen(5000, () => {
+    console.log('Server runing on http://localhost:5000')
+});

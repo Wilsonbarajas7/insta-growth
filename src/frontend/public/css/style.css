@@ -56,7 +56,39 @@ input[type="text"] {
     color: white;
 }
 
+.title-menu{
+    font-size: 25px;
+}
 
+.main-menu{
+
+}
+
+.menu-inline{
+
+}
+
+#clear{
+    border: 0;
+    background-color: #282a30;
+    margin-top: 2em;
+    padding: 1em 2em;
+    color:white;
+    font-weight: bolder;
+    border-radius: 15px;
+    box-shadow: 10px 10px 22px -1px rgba(0,0,0,0.30);
+}
+
+.menu-element{
+    display:inline-block;
+    line-height: 20px !important;
+    font-size: 15px;
+    margin-top: 0.7em;
+}
+
+li{
+    margin: 0 0.6em;
+}
 
 input:focus { 
     outline: none; 
@@ -68,3 +100,21 @@ input:focus {
     font-weight: bolder;
 }
 
+.user-profile{
+    display: inline-block;
+}
+
+.list-post{
+    padding-inline-start: 0em !important;
+    list-style-type: none;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}

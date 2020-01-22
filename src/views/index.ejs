@@ -14,10 +14,14 @@
 </head>
 <body>
     <div class="container ">
-        <div id="upper-row" class="row justify-content-center">
-            <div id="feed" class="col-7 text-center font-white ">
-
-            </div>
+            <nav class="main-menu d-flex">
+                <span class="title-menu">insta-growth</span>
+                <ul class="menu-inline">
+                    <li class="p2 menu-element">Stream posts</li>
+                    <li class="p2 menu-element">List posts</li>
+                    <li class="p2 menu-element">About</li>
+                </ul>
+            </nav>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -26,117 +30,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 
     <script>
-        //"hashtags" : ["recipe","foodies","cooking","food","foodporn","yumyum","foodphotography","foodpics","delicious"],
         let socket = io.connect('http://localhost:5000/');
-        let allPosts = [];
-
-        function createCard(username, profilePicture, post, date, media_id) {
-            let cardTemplate = `<div id="card#${username}#${date}" class="card-container">
-                <div class="name-holder d-flex flex-row ">
-                    <div class="profile-picture ">
-                        <img src="${profilePicture}" alt="profile picture">
-                        </div>
-                        <div class="user-caption">
-                            <span>${username}</span>
-                            </div>
-                            <div class="remove-card ml-auto p-2 bd-highlight">X</div>
-                        </div>
-                        <div class="card-picture">
-                            <img src="${post}" alt="instagram post">
-                        </div>
-                        <div class="icons-holder d-flex flex-row">
-                            <img class="like-icon" src="./img/like.svg" alt="Like icon" id="${username}#${date}#${media_id}#giveLike>
-                        </div>
-                        <div class="comments-holder mt-2">
-                            <div class="comment d-flex flex-row">
-                                
-                            </div>
-                        </div>
-                        <div class="post-comment mt-3">
-                            <input type="text" name="comment-to-post" placeholder="Escribe tu comentario aquí">
-                            <img class="icon_send" src="./img/send.svg" id="${username}#${date}#${media_id}#postComment">
-                            <!--<i  class="fi-xnsrxl-chevron-solid height-ok"></i>-->
-                        </div>
-                    </div>`
-
-            return cardTemplate
-        }
-
-        socket.on('addNewPost', (data) => {
-            console.log(data)
-            allPosts.push(data);
-        });
         
-        setInterval(() => {
-            let feedElChildrens = $('#feed').children()
-            if(feedElChildrens.length == 0 && allPosts != 0){
-                let cardToRender = createCard(allPosts[0].userInfo.username, allPosts[0].userInfo.profile_pic_url, allPosts[0].photoUrl, allPosts[0].ownFeed.taken_at, allPosts[0].ownFeed.id)
-                $("#feed").append(cardToRender)
-            }
-        }, 200);
-
-        $('#feed').on('click', '.icon_send', function () {
-            let dataSplited = this.id.split('#')
-            let commentPost = $(this).parent().children("input")[0].value
-            socket.emit('postComment', { "commentContent": commentPost, "user": dataSplited[0], "media_id": dataSplited[2] })
-            $(this).parent().parent().remove();
-            allPosts.shift();
-        });
-
-        $('#feed').on('click', '.remove-card', function () {
-            $(this).parent().parent().remove();
-            allPosts.shift();
-        });
-
-        $('#feed').on('click', '.like-icon', function () {
-            let dataSplited = this.id.split('#')
-            console.log(dataSplited)
-            
-            socket.emit('giveLike',{ "media_id": dataSplited[2].toString() } )
-
-            let el = $(this)[0]
-            $(this).addClass('animated')
-            $(this).addClass('heartBeat')
-
-            el.addEventListener('animationend', () => {
-                $(this).attr('src','./img/likeFilled.svg')
-            })
-        });
     </script>
 </body>
 
 </html>
 
-
-
-
-
-                <!--
-                <div class="card-container">
-                    <div class="name-holder d-flex flex-row">
-                        <div class="profile-picture ">
-                            <img src="https://i.pravatar.cc/300" alt="profile picture">
-                        </div>
-                        <div class="user-caption">
-                            <span>Chanquete</span>
-                        </div>
-                    </div>
-                    <div class="card-picture">
-                        <img src="https://via.placeholder.com/500" alt="instagram post">
-                    </div>
-                    <div class="icons-holder d-flex flex-row">
-                        <i id="" class="fi-xtluh2-thumb-wide"></i>
-                    </div>
-                    <div class="comments-holder mt-2">
-                        <div class="comment d-flex flex-row">
-                            <div class="comment-user">
-                                chanquete:
-                            </div>
-                            <div class="commment-content"> De este barco no me mueven</div>
-                        </div>
-                    </div>
-                    <div class="post-comment mt-3">
-                        <input type="text" name="comment-to-post" placeholder="Escribe tu comentario aquí">
-                        
-                    </div>
-                </div>-->

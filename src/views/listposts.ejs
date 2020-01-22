@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <title>Insta-growth</title>
+</head>
+
+<body>
+    <div class="container ">
+        <div id="upper-row" class="row justify-content-center">
+            <div id="feed" class="col-7 text-center font-white ">
+                <div class="card-container">
+                    <h2>Post list!</h2>
+                    <ul id="listposts" class="list-posts">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:15px;" class="row justify-content-center">
+            <button  id="clear">Clear already visited</button>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script defer src="https://friconix.com/cdn/friconix.js"> </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+    <script>
+        //"hashtags" : ["recipe","foodies","cooking","food","foodporn","yumyum","foodphotography","foodpics","delicious"],
+        let socket = io.connect('http://localhost:5000/');
+        let allPosts = [];
+
+        function createCard(code) {
+            let actualDate = new Date()
+            let now = actualDate.getDay().toString() + actualDate.getDate().toString() + actualDate.getHours().toString() + actualDate.getMinutes().toString() + actualDate.getMilliseconds().toString()
+            let cardTemplate = `<li id="${now}" class="list-post">https://instagram.com/p/${code}</li>`
+
+            return cardTemplate
+        }
+
+        $('body').on('click', '.list-post', function(e) {
+            let flag = true;
+            
+            console.log(e)
+            for(let i = 0 ; i < e.target.classList.length ; i++){
+                console.log(e.target.classList[i])
+                console.log(e.target.classList.length)
+                if(e.target.classList[i] == "clicked"){
+                    console.log("CHECK")
+                    flag = false;
+                }
+            }
+            window.open( e.target.innerText, "_blank"); 
+            
+            setTimeout(() => {
+                if(flag){
+                    $(`#${e.target.id}`).append("<span>🔴</span>")
+                    $(`#${e.target.id}`).addClass('clicked')
+                }
+            }, 1000);
+
+        });
+
+        $("#clear").click((e) => {
+            $( ".clicked" ).each(function( index ) {
+                $(this).remove()
+            });
+        })
+
+        socket.on('addNewPost', (data) => {
+            console.log(data)
+            allPosts.push(data);
+            let actualIndex = parseInt(allPosts.length) - 1;
+            let cardToRender = createCard(allPosts[actualIndex].ownFeed.code)
+
+            $("#listposts").append(cardToRender)
+        });
+
+
+    </script>
+</body>
+
+</html>

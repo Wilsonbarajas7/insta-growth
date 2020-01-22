@@ -1,17 +1,12 @@
 const config = require('./config.json');
 require('tools-for-instagram');
 const _ = require('lodash');
-const utilSave = require('./saveToJson');
+const utilSave = require('./utils/saveToJson');
 let socket = require('socket.io-client')('http://localhost:5000/');
-
-
-//"hashtags" : ["recipe","foodies","cooking","food","foodporn","yumyum","foodphotography","foodpics","delicious"],
 
 socket.on("connect", () => {
     console.log('Bot WORKING');
 });
-
-
 
 async function getCleanFeed(ig, hashtags) {
     return new Promise(async (resolve, reject) => {
@@ -95,7 +90,7 @@ async function sortByUserInfo(ig, feed) {
                     socket.emit('addNewPost', objectInfo);
                     usersFiltered.push(objectInfo)
                 }
-                await sleep(15)
+                await sleep(8)
             } catch (error) {
                 console.log(error)
             }
@@ -111,6 +106,7 @@ function getRatioFollowingFollowedAccounts(following_count, follower_count) {
 (async () => {
     const config = require('./config.json')
     let ig = await login();
+    await setAntiBanMode(ig)
 
     socket.on('postComment', function(data){
         console.log(data);
@@ -132,7 +128,4 @@ function getRatioFollowingFollowedAccounts(following_count, follower_count) {
     let sortedByInfoUser = await sortByUserInfo(ig,sortedByPopularity)// sortByUserInfo(ig,sortedByPopularity)
     console.log(`Sorted by uploaded maxFollows, maxMediaCount and verfiedProfile: ${sortedByInfoUser.length} profiles`)
     utilSave.saveVarToJson(sortedByInfoUser)
-
-    console.log("SESSION END")
 })();
-
