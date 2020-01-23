@@ -1,3 +1,4 @@
+global.noLogo = true
 const config = require('./config.json');
 require('tools-for-instagram');
 const _ = require('lodash');

@@ -68,6 +68,8 @@ input[type="text"] {
 
 }
 
+
+
 #clear{
     border: 0;
     background-color: #282a30;
@@ -88,13 +90,12 @@ input[type="text"] {
 
 li{
     margin: 0 0.6em;
+    list-style-type: none;
 }
 
 input:focus { 
     outline: none; 
 }
-
-
 
 .comment-user{
     font-weight: bolder;
@@ -107,6 +108,7 @@ input:focus {
 .list-post{
     padding-inline-start: 0em !important;
     list-style-type: none;
+    cursor: pointer;
 }
 
 ul {
