@@ -3,7 +3,7 @@
   <img width=300 src="https://i.imgur.com/hTtcGQk.png"/>
 
   <br>
-  <span><strong>insta-growth</strong> is a tool that facilitates the work when we try to realize the <a href="https://github.com/theyahya/sherlock/blob/master/sites.md">strategy $1.80</a></span>
+  <span><strong>insta-growth</strong> is a tool that facilitates the work when we try to realize the <a href="https://www.garyvaynerchuk.com/instagram-for-business-180-strategy-grow-business-brand/">strategy $1.80</a></span>
   
 
 </p>
@@ -63,6 +63,10 @@ And then we have to fine tune the options with which we want the application to 
     "maxMediaCount" : 450 //maximum media of our targets. 
 }
 ```
+**hashtags :** hashtags related to our account.
+**maxFollows :** maximum followers of our targets. 
+**maxMediaCount :** maximum media of our targets. 
+
 ## Usage
 **Now we are ready to run the software**. Open two different terminals, we will execute two separate processes
 ``` bash
