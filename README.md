@@ -1,12 +1,12 @@
 <p align=center>
 
-  <img width=300 src="https://i.imgur.com/hTtcGQk.png"/>
+  <img width=300 src="./src/frontend/public/img/logoalpha.png"/>
 
   <br>
   <span><strong>insta-growth</strong> is a tool that facilitates the work when we try to realize the <a href="https://www.garyvaynerchuk.com/instagram-for-business-180-strategy-grow-business-brand/">$1.80 strategy</a></span><br />
 <img src="https://img.shields.io/badge/NodeJS-10.13.0-green"> 
 <img src="https://img.shields.io/badge/License-MIT-blue">
-<img src="https://img.shields.io/badge/Website-up-green">
+<a href="http://girlazo.com"><img src="https://img.shields.io/badge/Website-up-green"></a>
 <img src="https://img.shields.io/badge/Version-0.0.1-blue">
 </p>
 
@@ -42,9 +42,9 @@ $ npm install
 
 
 ## Configuration 
-Before running the software we have to add a minimum configuration to our project so that it works correctly.
+Before running the software we have to add a minimum configuration to our project.
 
-First we are going to create a file that contains our **username** and **password** in **instagram**, this file must be located at the **src folder** of our project and we must call it **.env**
+First we are going to create a file that contains our **username** and **password** on **instagram**, this file must be located at the **src folder** of our project and we must call it **.env**  
 ``./src/.env``
 
 ``` env
@@ -86,7 +86,7 @@ $ node index
      <img src="./src/frontend/public/img/gif/index.gif"/>
 </p>
 
-These two processes belong to a web interface and the system that connects directly to instagram. We can interact directly with the web interface by browsing directly at <a href="http: //localhost:5000">http://localhost:5000</a>
+These two processes belong to a web interface and the system that connects directly to instagram. We can interact directly with the web interface by browsing at <a href="http: //localhost:5000">http://localhost:5000</a>
 
 
 ## Interface
