@@ -70,7 +70,7 @@ $ node server
 <p align="center">
      <img src="./src/frontend/public/img/gif/server.gif"/>
 </p>
-```bash
+``` bash
 # Terminal 2
 $ cd src
 $ node index
