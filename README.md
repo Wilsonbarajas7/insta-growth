@@ -1,6 +1,6 @@
 <p align=center>
 
-  <img width=300 src="./src/frontend/public/img/logoalpha.png"/>
+  <img width=300 src="https://i.imgur.com/KsPRbGP.png"/>
 
   <br>
   <span><strong>insta-growth</strong> is a tool that facilitates the work when we try to realize the <a href="https://www.garyvaynerchuk.com/instagram-for-business-180-strategy-grow-business-brand/">$1.80 strategy</a></span><br />
