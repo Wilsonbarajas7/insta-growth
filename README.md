@@ -3,7 +3,7 @@
   <img width=300 src="https://i.imgur.com/KsPRbGP.png"/>
 
   <br>
-  <span><strong>insta-growth</strong> is a tool that facilitates the work when we try to realize the <a href="https://www.garyvaynerchuk.com/instagram-for-business-180-strategy-grow-business-brand/">$1.80 strategy</a></span><br />
+  <span><strong>insta-growth</strong> is a set of tools that help us to realize the strategy 1.80 $ in a simple way and as quickly as possible. <a href="https://www.garyvaynerchuk.com/instagram-for-business-180-strategy-grow-business-brand/">$1.80 strategy</a></span><br />
 <img src="https://img.shields.io/badge/NodeJS-10.13.0-green"> 
 <img src="https://img.shields.io/badge/License-MIT-blue">
 <a href="http://girlazo.com"><img src="https://img.shields.io/badge/Website-up-green"></a>
